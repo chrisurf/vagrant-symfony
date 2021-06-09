@@ -5,6 +5,6 @@
 .DS_Store
 *.retry
 *.log
-/app/lara*
+/app/symfony*
 /config.yml*
 !/config.yml.example
