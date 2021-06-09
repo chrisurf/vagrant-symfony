@@ -1,0 +1,18 @@
+---
+
+  - name: Create a new database
+    mysql_db:
+      name: symfonydb
+      state: present
+
+  - name: Create database user with all database privileges
+    mysql_user:
+      name: symfony
+      password: symfony
+      priv: '*.*:ALL'
+      state: present
+
+  - name: Create symfony project
+    shell:
+      cmd: composer create-project symfony/website-skeleton symfony
+      chdir: /var/www/html/

@@ -1,0 +1,8 @@
+---
+- andrelohmann.root_colored_prompt
+- andrelohmann.percona_mysql
+- andrelohmann.sury_php
+- andrelohmann.apache_php
+- andrelohmann.nodesource
+- ocha.yarn
+...

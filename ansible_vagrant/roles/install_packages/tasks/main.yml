@@ -1,0 +1,74 @@
+---
+
+- name: debconf for phpmyadmin
+  debconf:
+    name: phpmyadmin
+    question: "{{ item.question }}"
+    value: "{{ item.value }}"
+    vtype: "{{ item.vtype }}"
+  with_items:
+  - question: 'phpmyadmin/dbconfig-install'
+    value: 'true'
+    vtype: 'boolean'
+  - question: 'phpmyadmin/app-password-confirm'
+    value: '{{percona_mysql_root_password}}'
+    vtype: 'password'
+  - question: 'phpmyadmin/mysql/admin-pass'
+    value: '{{percona_mysql_root_password}}'
+    vtype: 'password'
+  - question: 'phpmyadmin/mysql/app-pass'
+    value: '{{percona_mysql_root_password}}'
+    vtype: 'password'
+  - question: 'phpmyadmin/reconfigure-webserver'
+    value: 'apache2'
+    vtype: 'multiselect'
+
+- name: Install dependent packages and phpmyadmin
+  apt:
+    name: "{{ packages }}"
+    state: latest
+    dpkg_options: 'force-confnew,force-confdef'
+    autoclean: yes
+    autoremove: yes
+    update_cache: yes
+    cache_valid_time: 3600
+  vars:
+    packages:
+    - htop
+    - unzip
+    - phpmyadmin
+
+- name: Install Composer
+  get_url:
+    url: https://getcomposer.org/composer.phar
+    dest: /usr/local/bin/composer
+    mode: 0755
+    validate_certs: no
+
+- name: Adding existing user www-data to group vagrant
+  user:
+    name: www-data
+    groups: vagrant
+    append: yes
+
+# set up apache server for symfony web directoy
+- name: Copy site config from the remote machine to box
+  copy:
+    src: /vagrant/ansible_vagrant/config/symfony-site.conf
+    dest: /etc/apache2/sites-available/
+    remote_src: yes
+
+- name: Disable main site
+  shell:
+    cmd: a2dissite 000-default.conf
+
+- name: Enable symfony main site
+  shell:
+    cmd: a2ensite symfony-site.conf
+
+- name: reload service apache2, in all cases
+  systemd:
+    name: apache2
+    state: reloaded
+
+...

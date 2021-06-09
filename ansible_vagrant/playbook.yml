@@ -1,0 +1,69 @@
+---
+  # Play
+- hosts: all
+  become: true
+  become_method: sudo
+
+# Variables
+  vars:
+    percona_mysql_version: '8' #'5.7'
+    percona_mysql_root_password: vagrant
+    mysql_grants_databases:
+    - name: vagrant
+      encoding: utf8
+    mysql_grants_users:
+    - name: vagrant
+      password: vagrant
+      host: localhost
+      priv: 'vagrant.*:ALL'
+      state: present
+    apache_php_version: 7.4
+    sury_php_packages:
+    - php7.4-gd
+    - php7.4-mysql
+    - php7.4-curl
+    - php7.4-mbstring
+    - php7.4-xml
+    - php7.4-tidy
+    - php7.4-zip
+    - php7.4-imagick
+    - php7.4-geoip
+    - geoip-bin
+    - php7.4-common
+    - php7.4-mcrypt
+    - php7.4-intl
+    apache_php_ini_settings:
+    - key: post_max_size
+      value: 512M
+    - key: upload_max_filesize
+      value: 512M
+    - key: max_execution_time
+      value: 600
+    - key: max_input_time
+      value: 600
+    apache_php_additional_modules:
+    - name: rewrite
+      state: present
+    - name: proxy
+      state: present
+    - name: proxy_balancer
+      state: present
+    - name: proxy_http
+      state: present
+    - name: proxy_wstunnel
+      state: present
+    document_root: /var/www/app
+    php_timezone: Europe/Berlin
+
+# Roles
+  roles:
+    - andrelohmann.root_colored_prompt
+    - andrelohmann.percona_mysql
+    - andrelohmann.sury_php
+    - andrelohmann.apache_php
+    - andrelohmann.apache_php
+    - andrelohmann.nodesource
+    - ocha.yarn
+    - install_packages
+    - install_symfony
+...
