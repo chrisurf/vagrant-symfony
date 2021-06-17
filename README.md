@@ -45,4 +45,4 @@ vagrant up
 ```
 
 ### Test
-* Open [symfony.box](http://symfony.box)
+* Open [symfony.box](http://symfony.box) in your browser of choice.

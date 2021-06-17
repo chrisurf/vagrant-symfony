@@ -20,8 +20,8 @@ Vagrant.configure(2) do |config|
   config.hostmanager.manage_host = true
   config.hostmanager.include_offline = true
 
-  # install ubuntu
-  config.vm.box = "ubuntu/focal64" # 20.04
+  # install ubuntu 20.04
+  config.vm.box = "ubuntu/focal64" 
 
   config.vm.provider "virtualbox" do |vb|
     vb.memory = vagrant_config['memory']
@@ -35,7 +35,6 @@ Vagrant.configure(2) do |config|
   # vagrant-hostmanager is necessary to update /etc/hosts on hosts and guests
   config.vm.network "private_network", ip: vagrant_config['ip']
   config.vm.hostname = vagrant_config['domain']
-
 
   # Mount the synced folders with the owner/group set to the SSH user and any parent folders set to root
   config.vm.synced_folder ".", "/vagrant", disabled: true
