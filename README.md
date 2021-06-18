@@ -45,4 +45,6 @@ vagrant up
 ```
 
 ### Test
+* Default: ip: 192.168.12.34 domain: symfony.box.
+* MySQL db: symfony, user: symfony, password: symfony.
 * Open [symfony.box](http://symfony.box) in your browser of choice.
