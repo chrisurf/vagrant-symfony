@@ -21,7 +21,6 @@
                      @@@@@@    @@@@@                                            
                       @@@@@@@@@@                                                
          
-
 # vagrant-symfony-ansible
  (c) Chris Oguntolu 2021
 

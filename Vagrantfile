@@ -1,7 +1,7 @@
 ## -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# where to find the yml config file
+# yml config file location
 require 'yaml'
 current_dir     = File.dirname(File.expand_path(__FILE__))
 configs         = YAML.load_file("#{current_dir}/config.yml")
